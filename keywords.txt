@@ -1,0 +1,7 @@
+# Syntax Coloring Map For SensorSim
+
+# Class (KEYWORD1)
+SensorSim	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+check	KEYWORD2
