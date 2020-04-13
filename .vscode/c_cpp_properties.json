@@ -12,27 +12,24 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}",
-
                 "${arduinoBase}/tools/avr/avr/include",
                 "${arduinoBase}/arduino/avr/cores/arduino",
-
                 "${esp8266Base}/cores/esp8266",
                 "${esp8266Base}/variants/nodemcu",
                 "${esp8266Base}/tools/sdk/include",
                 "${esp8266Base}/libraries/**",
-
                 "${esp8266Tools}/xtensa-lx106-elf/include",
                 "${esp8266Tools}/xtensa-lx106-elf/include/c++/4.8.2",
                 "${esp8266Tools}/xtensa-lx106-elf/include/c++/4.8.2/xtensa-lx106-elf",
-
                 "${arduinoLib}/**"
             ],
             "defines": [
+				"UBRRH"
             ],
             "compilerPath": "/usr/bin/avr-gcc",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64"
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4

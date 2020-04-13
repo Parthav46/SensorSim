@@ -1,23 +1,57 @@
 #include "SensorSim.h"
 
-extern void check (Stream &port, char *ssid, char *pswd) {
-    Stream *serial = &port;
+SensorClass SensorSim;
+
+bool SensorClass::checkConnection () {
     HTTPClient http;
-    serial->println("Starting ESP8266...");
-    WiFi.begin(ssid, pswd);
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        serial->print(".");
-        delay(500);
-    }
-    serial->println();
-    serial->print("connected: ");
-    serial->println(WiFi.localIP());
+    if (WiFi.status() != WL_CONNECTED) return false;
     http.begin("http://www.google.com");
     int httpCode = http.GET();
-    if(httpCode == HTTP_CODE_OK) {
-        serial->println("Connected to the Internet");
-    } else {
-        serial->println("Failed to connect to the Internet");
+    if(httpCode == HTTP_CODE_OK) return true;
+	return false;
+}
+
+void SensorClass::begin() {
+	Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+}
+
+bool SensorClass::connect (char *uid) {
+	SensorClass::uid = uid;
+	SensorClass::type = Firebase.get(uid).getInt("type");
+	return start();
+}
+
+/*
+* Start firebase database location stream to check
+* for changes.
+*/
+bool SensorClass::start() {
+	Firebase.stream(uid);
+	bool status = true;
+	status &= Firebase.success();
+	if(status){
+		switch(type) {
+		case 0:
+			pinMode(D1, OUTPUT);
+			break;
+		}
+	}
+	if(!status) stop();
+	return status;
+}
+
+void SensorClass::stop() {
+
+}
+
+void SensorClass::refresh() {
+	if(Firebase.available()) {
+		switch (type) {
+			case 0:
+				int level = Firebase.readEvent().getInt("data");
+				analogWrite(D1, level);
+				break;
+		}
 	}
 }
+

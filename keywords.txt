@@ -4,4 +4,8 @@
 SensorSim	KEYWORD1
 
 # Methods and Functions (KEYWORD2)
-check	KEYWORD2
+begin			KEYWORD2
+checkConnection	KEYWORD2
+connect			KEYWORD2
+refresh			KEYWORD2
+stop			KEYWORD2
